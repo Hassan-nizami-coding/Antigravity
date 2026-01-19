@@ -1,0 +1,74 @@
+.darkveil-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  z-index: 10; /* Above fallback */
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+/* Container must have explicit dimensions */
+.darkveil-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 0;
+  background-color: transparent;
+}
+
+/* Fallback Gradient - Optimized for Performance */
+.darkveil-fallback {
+  position: absolute;
+  /* Make the background larger than the screen for smooth panning */
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 0; /* Behind canvas */
+  
+  /* Use GPU-accelerated transform instead of background-position */
+  will-change: transform;
+  animation: meshMove 20s ease-in-out infinite alternate;
+  transition: opacity 0.5s ease;
+}
+
+.darkveil-fallback.light {
+  /* Teal/Cyan/White mix */
+  background: linear-gradient(
+    135deg, 
+    #f0fdfa 0%, /* primary-50 */
+    #ccfbf1 25%, /* primary-100 */
+    #e0f2fe 50%, /* sky-100 */
+    #99f6e4 75%, /* primary-200 */
+    #f0fdfa 100%
+  );
+  background-size: 100% 100%;
+}
+
+.darkveil-fallback.dark {
+  /* Deep Space: Black, Slate, Teal-900, Violet-900 */
+  background: linear-gradient(
+    135deg, 
+    #020617 0%, /* slate-950 */
+    #134e4a 25%, /* primary-900 */
+    #0f172a 50%, /* slate-900 */
+    #312e81 75%, /* indigo-900 */
+    #020617 100%
+  );
+  background-size: 100% 100%;
+}
+
+@keyframes meshMove {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(10%, 10%) rotate(5deg);
+  }
+}
